@@ -1,5 +1,5 @@
 import { useState, useEffect, JSX } from 'react'
-import { Droplets } from "lucide-react";
+import { Droplets, NotebookPen, Skull } from 'lucide-react'
 import { images } from "@renderer/components/images/images";
 
 const samplePlants: PlantCardProps[] = [
@@ -119,17 +119,17 @@ const PlantCard = ({
       return <img className="max-h-full max-w-full" src={images.dead} />;
     }
   };
-
+/*
+<div
+  class="relative w-80 h-96 mx-auto bg-[url('/images/egg-shape.png')] bg-cover bg-center p-6 shadow-lg"
+>
+ */
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6 w-80 mx-auto">
       {/* Plant Image Container */}
       {getProgressImage()}
-
-
-
       {/* Plant Name */}
       <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">{plantName}</h3>
-
       {/* Progress Bar and Button Container */}
       <div className="flex items-center gap-3">
         {/* Progress Bar */}
@@ -148,17 +148,32 @@ const PlantCard = ({
             />
           </div>
         </div>
-
-        {/* Water Button */}
-        <button
-          onClick={handleWater}
-          className="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
-          title="Water plant"
-        >
-          <Droplets size={20} />
-        </button>
       </div>
+<div className="flex items-center gap-14 m-2 p-2">
 
+  <button
+    onClick={handleWater}
+    className="bg-red-500 hover:bg-red-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
+    title="Water plant"
+  >
+    <Skull size={20} />
+  </button>
+  <button
+    onClick={handleWater}
+    className="bg-gray-500 hover:bg-gray-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
+    title="Water plant"
+  >
+    <NotebookPen size={20} />
+  </button>
+
+  <button
+    onClick={handleWater}
+    className="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
+    title="Water plant"
+  >
+    <Droplets size={20} />
+  </button>
+</div>
       {/* Last Watered Info */}
       <div className="text-xs text-gray-500 mt-3 text-center">
         Last watered: {new Date(lastWateredTime).toLocaleDateString()}
@@ -271,13 +286,13 @@ const PlantCarousel = ({
           <>
             <button
               onClick={prevSlide}
-              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-400 bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
             >
               ←
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-400 bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
             >
               →
             </button>
