@@ -1,39 +1,38 @@
 import { useState, useEffect, JSX } from 'react'
 import { Droplets } from "lucide-react";
+import { images } from "@renderer/components/images/images";
 
-
-// Sample plant data - you'll replace this with your actual data source
 const samplePlants: PlantCardProps[] = [
+  //  lastWatered: Date.now() - days * hours * minutes * millisec
   {
-    id: "1",
-    plantName: "Snake Plant",
+    id: '1',
+    plantName: 'Snake Plant',
     wateringInterval: 14, // days
     onWater: () => {},
-    lastWatered: Date.now() - (5 * 24 * 60 * 60 * 1000) // 5 days ago
+    lastWatered: Date.now() - 1 * 24 * 60 * 60 * 1000,
   },
   {
-    id: "2",
-    plantName: "Pothos",
-    wateringInterval: 7,
+    id: '2',
+    plantName: 'Pothos',
+    wateringInterval: 14,
     onWater: () => {},
-    lastWatered: Date.now() - (3 * 24 * 60 * 60 * 1000) // 3 days ago
+    lastWatered: Date.now() - 3 * 24 * 60 * 60 * 1000,
   },
   {
-    id: "3",
-    plantName: "Peace Lily",
-    wateringInterval: 5,
+    id: '3',
+    plantName: 'Peace Lily',
+    wateringInterval: 14,
     onWater: () => {},
-
-    lastWatered: Date.now() - (4 * 24 * 60 * 60 * 1000) // 4 days ago
+    lastWatered: Date.now() - 5 * 24 * 60 * 60 * 1000,
   },
   {
-    id: "4",
-    plantName: "Rubber Plant",
-    wateringInterval: 10,
+    id: '4',
+    plantName: 'Rubber Plant',
+    wateringInterval: 1,
     onWater: () => {},
-    lastWatered: Date.now() - (8 * 24 * 60 * 60 * 1000) // 8 days ago
+    lastWatered: Date.now() - 10 * 24 * 60 * 60 * 1000,
   }
-];
+]
 
 type PlantCardProps = {
   plantName: string;
@@ -44,7 +43,6 @@ type PlantCardProps = {
   onWater: (now: number) => void;
 };
 
-// PlantCard Component (inline to avoid import issues)
 const PlantCard = ({
   plantName = 'My Plant',
                      wateringInterval = 7, // days
@@ -99,17 +97,31 @@ const PlantCard = ({
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const getProgressColor = () => {
-    if (progress < 50) return '#22c55e'; // Green
-    if (progress < 80) return '#eab308'; // Yellow
+    if (progress < 75) return '#22c55e';
+    if (progress < 50) return '#eab308';
+    if (progress < 25) return '#37b9f3';
     return '#ef4444'; // Red
+  };
+
+  const getProgressImage = () => {
+    if (progress < 25) {
+      return <img src={images.healthy} />;
+    } else if (progress < 50) {
+      return <img src={images.good} />;
+    } else if (progress < 75) {
+      return <img src={images.bad} />;
+    } else {
+      return <img src={images.dead} />;
+    }
   };
 
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6 w-80 mx-auto">
       {/* Plant Image Container */}
       <div className="bg-gray-100 rounded-xl p-8 mb-6 flex items-center justify-center min-h-48">
-        <img src={"src/components/images/plant.png"} />
+        {getProgressImage()}
       </div>
+
 
       {/* Plant Name */}
       <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">{plantName}</h3>
@@ -148,7 +160,7 @@ const PlantCard = ({
         Last watered: {new Date(lastWateredTime).toLocaleDateString()}
       </div>
     </div>
-  );
+  )
 };
 
 
