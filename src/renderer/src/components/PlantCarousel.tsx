@@ -16,14 +16,14 @@ const samplePlants: PlantCardProps[] = [
     plantName: 'Pothos',
     wateringInterval: 14,
     onWater: () => {},
-    lastWatered: Date.now() - 3 * 24 * 60 * 60 * 1000,
+    lastWatered: Date.now() - 4 * 24 * 60 * 60 * 1000,
   },
   {
     id: '3',
     plantName: 'Peace Lily',
     wateringInterval: 14,
     onWater: () => {},
-    lastWatered: Date.now() - 5 * 24 * 60 * 60 * 1000,
+    lastWatered: Date.now() - 8 * 24 * 60 * 60 * 1000,
   },
   {
     id: '4',
@@ -97,30 +97,34 @@ const PlantCard = ({
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const getProgressColor = () => {
-    if (progress < 75) return '#22c55e';
-    if (progress < 50) return '#eab308';
-    if (progress < 25) return '#37b9f3';
-    return '#ef4444'; // Red
+    if (progress < 25) {
+      return '#3bd100'
+    } else if (progress < 50) {
+      return '#d1ce00'
+    } else if (progress < 75) {
+      return '#d16f00'
+    } else {
+      return '#d10000'
+    }
   };
 
   const getProgressImage = () => {
     if (progress < 25) {
-      return <img src={images.healthy} />;
+      return <img  className="max-h-full max-w-full" src={images.healthy} />;
     } else if (progress < 50) {
-      return <img src={images.good} />;
+      return <img className="max-h-full max-w-full" src={images.good} />;
     } else if (progress < 75) {
-      return <img src={images.bad} />;
+      return <img className="max-h-full max-w-full" src={images.bad} />;
     } else {
-      return <img src={images.dead} />;
+      return <img className="max-h-full max-w-full" src={images.dead} />;
     }
   };
 
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6 w-80 mx-auto">
       {/* Plant Image Container */}
-      <div className="bg-gray-100 rounded-xl p-8 mb-6 flex items-center justify-center min-h-48">
-        {getProgressImage()}
-      </div>
+      {getProgressImage()}
+
 
 
       {/* Plant Name */}
