@@ -1,7 +1,5 @@
 import { useState, useEffect, JSX } from 'react'
 import {
-  ArrowLeft,
-  ArrowLeftCircle,
   ChevronLeft,
   ChevronRight,
   Droplets,
@@ -135,13 +133,13 @@ const PlantCard = ({
  */
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6 mt-14 w-80 mx-auto">
-      <button
-        onClick={handleWater}
-        className="bg-green-500 hover:bg-green-700 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
-        title="Add a new plant"
-      >
-        <Plus size={20} />
-      </button>
+      {/*<button*/}
+      {/*  onClick={handleWater}*/}
+      {/*  className="bg-green-500 hover:bg-green-700 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"*/}
+      {/*  title="Add a new plant"*/}
+      {/*>*/}
+      {/*  <Plus size={20} />*/}
+      {/*</button>*/}
       {/* Plant Image Container */}
       {getProgressImage()}
       {/* Plant Name */}
@@ -170,14 +168,14 @@ const PlantCard = ({
   <button
     onClick={handleWater}
     className="bg-red-500 hover:bg-red-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
-    title="Water plant"
+    title="Kill plant"
   >
     <Skull size={20} />
   </button>
   <button
     onClick={handleWater}
     className="bg-gray-500 hover:bg-gray-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
-    title="Water plant"
+    title="Edit Plant"
   >
     <NotebookPen size={20} />
   </button>
