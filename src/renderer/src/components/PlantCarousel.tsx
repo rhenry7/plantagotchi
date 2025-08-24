@@ -1,5 +1,14 @@
 import { useState, useEffect, JSX } from 'react'
-import { Droplets, NotebookPen, Skull } from 'lucide-react'
+import {
+  ArrowLeft,
+  ArrowLeftCircle,
+  ChevronLeft,
+  ChevronRight,
+  Droplets,
+  NotebookPen,
+  Plus,
+  Skull
+} from 'lucide-react'
 import { images } from "@renderer/components/images/images";
 
 const samplePlants: PlantCardProps[] = [
@@ -125,7 +134,14 @@ const PlantCard = ({
 >
  */
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6 w-80 mx-auto">
+    <div className="bg-white rounded-2xl shadow-lg p-6 mt-14 w-80 mx-auto">
+      <button
+        onClick={handleWater}
+        className="bg-green-500 hover:bg-green-700 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
+        title="Add a new plant"
+      >
+        <Plus size={20} />
+      </button>
       {/* Plant Image Container */}
       {getProgressImage()}
       {/* Plant Name */}
@@ -253,12 +269,12 @@ const PlantCarousel = ({
   return (
     <div className="w-full max-w-md mx-auto">
       {/* Header */}
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">My Plants</h2>
-        <p className="text-gray-600">
-          {activeIndex + 1} of {plantsData.length}
-        </p>
-      </div>
+      {/*<div className="text-center mb-6">*/}
+      {/*  <h2 className="text-2xl font-bold text-gray-800 mb-2">My Plants</h2>*/}
+      {/*  <p className="text-gray-600">*/}
+      {/*    {activeIndex + 1} of {plantsData.length}*/}
+      {/*  </p>*/}
+      {/*</div>*/}
 
       {/* Custom Swiper Container */}
       <div className="relative overflow-hidden">
@@ -286,15 +302,15 @@ const PlantCarousel = ({
           <>
             <button
               onClick={prevSlide}
-              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-400 bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
             >
-              ←
+              <ChevronLeft size={30} color={"#000000"} />
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-400 bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
             >
-              →
+              <ChevronRight size={30} color={"#000000"} />
             </button>
           </>
         )}
@@ -315,12 +331,6 @@ const PlantCarousel = ({
         </div>
       )}
 
-      {/* Add Plant Button */}
-      <div className="text-center mt-6">
-        <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full transition-colors duration-200">
-          + Add New Plant
-        </button>
-      </div>
     </div>
   );
 };
