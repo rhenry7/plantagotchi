@@ -85,7 +85,7 @@ const PlantCard = ({
   >
    */
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6 mt-14 w-80 mx-auto">
+    <div className="bg-white rounded-3xl shadow-lg p-6 mt-14 w-80 mx-auto">
       {/*<button*/}
       {/*  onClick={handleWater}*/}
       {/*  className="bg-green-500 hover:bg-green-700 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"*/}
@@ -120,14 +120,14 @@ const PlantCard = ({
 
         <button
           onClick={handleWater}
-          className="bg-red-500 hover:bg-red-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
+          className="bg-black hover:bg-red-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
           title="Kill plant"
         >
           <Skull size={20} />
         </button>
         <button
           onClick={handleWater}
-          className="bg-gray-500 hover:bg-gray-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
+          className="bg-black hover:bg-gray-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
           title="Edit Plant"
         >
           <NotebookPen size={20} />
@@ -135,7 +135,7 @@ const PlantCard = ({
 
         <button
           onClick={handleWater}
-          className="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
+          className="bg-black hover:bg-blue-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
           title="Water plant"
         >
           <Droplets size={20} />
