@@ -86,14 +86,6 @@ const PlantCard = ({
    */
   return (
     <div className="bg-white rounded-3xl shadow-lg p-6 mt-14 w-80 mx-auto">
-      {/*<button*/}
-      {/*  onClick={handleWater}*/}
-      {/*  className="bg-green-500 hover:bg-green-700 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"*/}
-      {/*  title="Add a new plant"*/}
-      {/*>*/}
-      {/*  <Plus size={20} />*/}
-      {/*</button>*/}
-      {/* Plant Image Container */}
       {getProgressImage()}
       {/* Plant Name */}
       <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">{plantName}</h3>
@@ -101,9 +93,8 @@ const PlantCard = ({
       <div className="flex items-center gap-3">
         {/* Progress Bar */}
         <div className="flex-1">
-          <div className="flex justify-between text-sm text-gray-600 mb-1">
-            <span>Water in: {timeLeft}</span>
-            <span>{Math.round(progress)}%</span>
+          <div className="text-xs text-gray-500 my-3 text-center">
+            <span>{`Dehydration level is at: ${Math.round(progress)}`}%</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3">
             <div
@@ -117,16 +108,15 @@ const PlantCard = ({
         </div>
       </div>
       <div className="flex items-center gap-14 m-2 p-2">
-
         <button
-          onClick={handleWater}
+          onClick={() => {}}
           className="bg-black hover:bg-red-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
           title="Kill plant"
         >
           <Skull size={20} />
         </button>
         <button
-          onClick={handleWater}
+          onClick={() => {}}
           className="bg-black hover:bg-gray-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
           title="Edit Plant"
         >
