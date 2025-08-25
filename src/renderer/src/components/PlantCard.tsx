@@ -15,7 +15,7 @@ function plantActions(handleWater: () => void): JSX.Element {
       </button>
       <button
         onClick={() => {}}
-        className="bg-black hover:bg-gray-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
+        className="bg-black hover:bg-orange-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
         title="Edit Plant"
       >
         <NotebookPen size={20} />
