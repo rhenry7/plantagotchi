@@ -101,7 +101,8 @@ const PlantCard = ({
         {/* Progress Bar */}
         <div className="flex-1">
           <div className="text-xs text-gray-500 my-3 text-center">
-            <span>{`Dehydration level is at: ${Math.round(progress)}`}%</span>
+            {/*<span>{Math.round(progress) === 100 ? "Your plant is dead": `Dehydration level is at: ${Math.round(progress)}`}</span>*/}
+
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3">
             <div
