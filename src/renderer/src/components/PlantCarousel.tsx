@@ -10,28 +10,28 @@ const samplePlants: PlantCardProps[] = [
   //  lastWatered: Date.now() - days * hours * minutes * millisec
   {
     id: '1',
-    plantName: 'Snake Plant',
+    plantName: 'Frank The Plant',
     wateringInterval: 14, // days
     onWater: () => {},
     lastWatered: Date.now() - 1 * 24 * 60 * 60 * 1000,
   },
   {
     id: '2',
-    plantName: 'Pothos',
+    plantName: 'Frank The Plant',
     wateringInterval: 14,
     onWater: () => {},
     lastWatered: Date.now() - 4 * 24 * 60 * 60 * 1000,
   },
   {
     id: '3',
-    plantName: 'Peace Lily',
+    plantName: 'Frank The Plant',
     wateringInterval: 14,
     onWater: () => {},
     lastWatered: Date.now() - 8 * 24 * 60 * 60 * 1000,
   },
   {
     id: '4',
-    plantName: 'Rubber Plant',
+    plantName: 'Frank The Plant',
     wateringInterval: 1,
     onWater: () => {},
     lastWatered: Date.now() - 10 * 24 * 60 * 60 * 1000,
