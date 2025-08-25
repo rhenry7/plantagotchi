@@ -41,7 +41,6 @@ const PlantCard = ({
 }: PlantCardProps): JSX.Element => {
   const [progress, setProgress] = useState(0)
   const [volumeOn, setVolume] = useState<boolean>(false);
-  const [lastWateredTime, setLastWateredTime] = useState(lastWatered || Date.now());
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [plantNameState, setPlantNameState] = useState(plantName);
   const [wateringIntervalState, setWateringIntervalState] = useState(wateringInterval);
@@ -69,7 +68,7 @@ const PlantCard = ({
   useEffect(() => {
     const updateProgress = (): void => {
       const now = Date.now()
-      const timeSinceWatered = now - lastWateredTime
+      const timeSinceWatered = now - lastWateredState
       const totalWateringTime = wateringIntervalState * 24 * 60 * 60 * 1000 // Convert days to ms
 
       const progressPercentage = Math.min((timeSinceWatered / totalWateringTime) * 100, 100)
@@ -82,12 +81,12 @@ const PlantCard = ({
     const interval = setInterval(updateProgress, 60000) // Update every minute
 
     return () => clearInterval(interval)
-  }, [lastWateredTime, wateringIntervalState, volumeOn])
+  }, [lastWateredState, wateringIntervalState, volumeOn])
 
 
   const handleWater = (): void => {
     const now = Date.now()
-    setLastWateredTime(now)
+    setLastWateredState(now)
     setProgress(0)
     if (onWater) {
       onWater(now)
@@ -156,7 +155,6 @@ const PlantCard = ({
           setPlantNameState(data.name);
           setWateringIntervalState(data.wateringInterval);
           setLastWateredState(new Date(data.lastWatered).getTime());
-          setLastWateredTime(new Date(data.lastWatered).getTime());
           setIsModalOpen(false);
         }}
       />
