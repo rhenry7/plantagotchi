@@ -1,6 +1,6 @@
-import { JSX, useEffect, useState } from 'react'
+import { JSX, useEffect, useRef, useState } from 'react'
 import { images } from '@renderer/components/images/images'
-import { Droplets, NotebookPen, Skull } from 'lucide-react'
+import { Droplets, NotebookPen, Skull, Volume2, VolumeOff } from 'lucide-react'
 import { PlantCardProps } from '@renderer/components/types'
 
 function plantActions(handleWater: () => void): JSX.Element {
@@ -39,8 +39,29 @@ const PlantCard = ({
   onWater
 }: PlantCardProps): JSX.Element => {
   const [progress, setProgress] = useState(0)
+  const [volumeOn, setVolume] = useState<boolean>(false);
   const [lastWateredTime, setLastWateredTime] = useState(lastWatered || Date.now())
 
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  if (!audioRef.current) {
+    audioRef.current = new Audio("sounds/audio.wav");
+    audioRef.current.loop = true;
+  }
+
+  const togglePlayPause = (): void => {
+    if (!audioRef.current) return;
+
+    if (volumeOn) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+
+    setVolume(!volumeOn);
+    console.log({ volumeOn: !volumeOn });
+  };
   useEffect(() => {
     const updateProgress = (): void => {
       const now = Date.now()
@@ -50,13 +71,15 @@ const PlantCard = ({
       const progressPercentage = Math.min((timeSinceWatered / totalWateringTime) * 100, 100)
       setProgress(progressPercentage)
 
+
     }
 
     updateProgress()
     const interval = setInterval(updateProgress, 60000) // Update every minute
 
     return () => clearInterval(interval)
-  }, [lastWateredTime, wateringInterval])
+  }, [lastWateredTime, wateringInterval, volumeOn])
+
 
   const handleWater = (): void => {
     const now = Date.now()
@@ -92,7 +115,14 @@ const PlantCard = ({
     }
   }
   return (
-    <div className="bg-white rounded-3xl shadow-lg p-6 mt-14 w-80 mx-auto">
+    <div className="bg-white border-3 border-solid border-b-black rounded-3xl shadow-lg p-4 mt-14 w-80 mx-auto">
+      <button
+        onClick={togglePlayPause}
+        className="bg-gray-500 hover:bg-gray-700 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
+        title="Volume"
+      >
+        {!volumeOn? <VolumeOff size={15}/> :<Volume2 size={15} />}
+      </button>
       {getProgressImage()}
       {/* Plant Name */}
       <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">{plantName}</h3>
@@ -102,7 +132,6 @@ const PlantCard = ({
         <div className="flex-1">
           <div className="text-xs text-gray-500 my-3 text-center">
             {/*<span>{Math.round(progress) === 100 ? "Your plant is dead": `Dehydration level is at: ${Math.round(progress)}`}</span>*/}
-
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3">
             <div
