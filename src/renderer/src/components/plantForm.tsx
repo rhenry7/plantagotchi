@@ -36,8 +36,8 @@ export default function PlantModal({ isOpen, onClose, onSubmit }: ModalProps): J
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-2xl shadow-xl p-6 w-[400px]">
+    <div className="fixed inset-0 flex items-center pt-50 justify-center mt-5 z-0 ">
+      <div className="bg-white rounded-2xl shadow-2xl p-6 w-[300px] h-[500px] pt-10 mt-28">
         <h2 className="text-xl font-semibold mb-4 text-black">Edit Plant</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -76,17 +76,17 @@ export default function PlantModal({ isOpen, onClose, onSubmit }: ModalProps): J
             />
           </div>
 
-          <div className="flex justify-end space-x-2">
+          <div className="flex justify-end space-x-2 pt-10">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300"
+              className="px-6 py-2 rounded-lg bg-red-300 hover:bg-red-500"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+              className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
             >
               Save
             </button>
