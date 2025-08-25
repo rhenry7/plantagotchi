@@ -1,9 +1,10 @@
 import { JSX, useEffect, useRef, useState } from 'react'
 import { images } from '@renderer/components/images/images'
 import { Droplets, NotebookPen, Skull, Volume2, VolumeOff } from 'lucide-react'
-import { PlantCardProps } from '@renderer/components/types'
+import PlantModal, { PlantFormData } from './plantForm'
+import { PlantCardProps } from './types'
 
-function plantActions(handleWater: () => void): JSX.Element {
+function plantActions(handleWater: () => void, setIsModalOpen: (isOpen: boolean) => void): JSX.Element {
   return (
     <div className="flex items-center gap-14 m-2 p-2">
       <button
@@ -14,7 +15,7 @@ function plantActions(handleWater: () => void): JSX.Element {
         <Skull size={20} />
       </button>
       <button
-        onClick={() => {}}
+        onClick={() => setIsModalOpen(true)}
         className="bg-black hover:bg-orange-600 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
         title="Edit Plant"
       >
@@ -40,8 +41,11 @@ const PlantCard = ({
 }: PlantCardProps): JSX.Element => {
   const [progress, setProgress] = useState(0)
   const [volumeOn, setVolume] = useState<boolean>(false);
-  const [lastWateredTime, setLastWateredTime] = useState(lastWatered || Date.now())
-
+  const [lastWateredTime, setLastWateredTime] = useState(lastWatered || Date.now());
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [plantNameState, setPlantNameState] = useState(plantName);
+  const [wateringIntervalState, setWateringIntervalState] = useState(wateringInterval);
+  const [lastWateredState, setLastWateredState] = useState(lastWatered || Date.now());
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -66,7 +70,7 @@ const PlantCard = ({
     const updateProgress = (): void => {
       const now = Date.now()
       const timeSinceWatered = now - lastWateredTime
-      const totalWateringTime = wateringInterval * 24 * 60 * 60 * 1000 // Convert days to ms
+      const totalWateringTime = wateringIntervalState * 24 * 60 * 60 * 1000 // Convert days to ms
 
       const progressPercentage = Math.min((timeSinceWatered / totalWateringTime) * 100, 100)
       setProgress(progressPercentage)
@@ -78,7 +82,7 @@ const PlantCard = ({
     const interval = setInterval(updateProgress, 60000) // Update every minute
 
     return () => clearInterval(interval)
-  }, [lastWateredTime, wateringInterval, volumeOn])
+  }, [lastWateredTime, wateringIntervalState, volumeOn])
 
 
   const handleWater = (): void => {
@@ -115,7 +119,7 @@ const PlantCard = ({
     }
   }
   return (
-    <div className="bg-white border-3 border-solid border-b-black rounded-3xl shadow-lg p-4 mt-14 w-80 mx-auto">
+    <div className="bg-white border-3 border-solid border-b-black rounded-3xl shadow-lg p-8 mt-36 w-80 mx-auto">
       <button
         onClick={togglePlayPause}
         className="bg-gray-500 hover:bg-gray-700 text-white p-3 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
@@ -125,7 +129,7 @@ const PlantCard = ({
       </button>
       {getProgressImage()}
       {/* Plant Name */}
-      <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">{plantName}</h3>
+      <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">{plantNameState}</h3>
       {/* Progress Bar and Button Container */}
       <div className="flex items-center gap-3">
         {/* Progress Bar */}
@@ -144,10 +148,21 @@ const PlantCard = ({
           </div>
         </div>
       </div>
-      {plantActions(handleWater)}
+      {plantActions(handleWater, setIsModalOpen)}
+      <PlantModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={(data: PlantFormData) => {
+          setPlantNameState(data.name);
+          setWateringIntervalState(data.wateringInterval);
+          setLastWateredState(new Date(data.lastWatered).getTime());
+          setLastWateredTime(new Date(data.lastWatered).getTime());
+          setIsModalOpen(false);
+        }}
+      />
       {/* Last Watered Info */}
-      <div className="text-xs text-gray-500 mt-3 text-center">
-        Last watered: {new Date(lastWateredTime).toLocaleDateString()}
+      <div className="text-xs text-gray-500 mt-0.5 text-center">
+        Last watered: {new Date(lastWateredState).toLocaleDateString()}
       </div>
     </div>
   )

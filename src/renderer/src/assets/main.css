@@ -8,6 +8,8 @@ body {
   background-image: url("../egg-shell.png");
   background-size: cover;
   user-select: none;
+  max-width: 1200px;
+  max-height: 100vh;
 }
 
 code {
@@ -148,6 +150,11 @@ code {
   opacity: 0.8;
   &:last-child {
     border: none;
+  }
+}
+@media(max-width: 1024px) {
+  .body {
+    background-size: max(500px, 700px);
   }
 }
 

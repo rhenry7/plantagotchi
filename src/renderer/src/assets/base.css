@@ -65,3 +65,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.app-container {
+  width: 540px;
+  height: 800px;
+  max-width: 540px;
+  max-height: 800px;
+  overflow: hidden;
+  background: white;  /* your UI background */
+}
