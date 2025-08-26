@@ -17,21 +17,21 @@ const samplePlants: PlantCardProps[] = [
   },
   {
     id: '2',
-    plantName: 'Frank The Plant',
+    plantName: 'Gary',
     wateringInterval: 14,
     onWater: () => {},
     lastWatered: Date.now() - 4 * 24 * 60 * 60 * 1000,
   },
   {
     id: '3',
-    plantName: 'Frank The Plant',
+    plantName: 'Lisa',
     wateringInterval: 14,
     onWater: () => {},
     lastWatered: Date.now() - 8 * 24 * 60 * 60 * 1000,
   },
   {
     id: '4',
-    plantName: 'Frank The Plant',
+    plantName: 'Spike',
     wateringInterval: 1,
     onWater: () => {},
     lastWatered: Date.now() - 10 * 24 * 60 * 60 * 1000,
@@ -109,15 +109,7 @@ const PlantCarousel = ({
 
   return (
     <div className="w-full max-w-md mx-auto">
-      {/* Header */}
-      {/*<div className="text-center mb-6">*/}
-      {/*  <h2 className="text-2xl font-bold text-gray-800 mb-2">My Plants</h2>*/}
-      {/*  <p className="text-gray-600">*/}
-      {/*    {activeIndex + 1} of {plantsData.length}*/}
-      {/*  </p>*/}
-      {/*</div>*/}
 
-      {/* Custom Swiper Container */}
       <div className="relative overflow-hidden">
         <div
           className="flex transition-transform duration-300 ease-out"
