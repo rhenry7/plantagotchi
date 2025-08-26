@@ -86,7 +86,7 @@ export default function PlantModal({ isOpen, onClose, onSubmit }: ModalProps): J
             </button>
             <button
               type="submit"
-              className="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+              className="px-6 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
             >
               Save
             </button>
