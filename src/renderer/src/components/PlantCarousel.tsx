@@ -15,6 +15,7 @@ const samplePlants: PlantCardProps[] = [
     wateringInterval: 14, // days
     onWater: () => {},
     lastWatered: Date.now() - 1 * 24 * 60 * 60 * 1000,
+    onEdit: () => {}
   },
   {
     id: '2',
@@ -22,6 +23,8 @@ const samplePlants: PlantCardProps[] = [
     wateringInterval: 14,
     onWater: () => {},
     lastWatered: Date.now() - 4 * 24 * 60 * 60 * 1000,
+    onEdit: () => {}
+
   },
   {
     id: '3',
@@ -29,6 +32,8 @@ const samplePlants: PlantCardProps[] = [
     wateringInterval: 14,
     onWater: () => {},
     lastWatered: Date.now() - 8 * 24 * 60 * 60 * 1000,
+    onEdit: () => {}
+
   },
   {
     id: '4',
@@ -36,6 +41,8 @@ const samplePlants: PlantCardProps[] = [
     wateringInterval: 1,
     onWater: () => {},
     lastWatered: Date.now() - 10 * 24 * 60 * 60 * 1000,
+    onEdit: () => {}
+
   }
 ]
 
@@ -43,12 +50,13 @@ const samplePlants: PlantCardProps[] = [
 
 type PlantCarouselProps = {
   plants?: PlantCardProps[],
-  onUpdatePlant?: (plantId: string, wateredTime: number) => void
+  onUpdatePlant?: (plantId: string, wateredTime: number) => void,
+  onEditPlant?: (plantId: string, data: PlantFormData) => void,
 }
 
 const PlantCarousel = ({
   plants = samplePlants,
-  onUpdatePlant
+
 }: PlantCarouselProps): JSX.Element => {
   const [plantsData, setPlantsData] = useState(plants);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -58,8 +66,24 @@ const PlantCarousel = ({
     option: false,
     plantId: ''
   })
+console.log({ plantsData })
+  const handleEditPlant = (plantId: string, data: PlantFormData, update: boolean) => {
+    console.log(plantId)
+    setPlantsData((prev) =>
+      prev.map((plant) =>
+        plant.id === plantId && update
+          ? {
+            ...plant,
+            plantName: data.name,
+            wateringInterval: data.wateringInterval,
+            lastWatered: new Date(data.lastWatered).getTime(),
+          }
+          : plant
+      )
+    );
 
-
+    setIsModalOpen({ option: false, plantId });
+  };
 
   const handleWaterPlant = (plantId, wateredTime): void => {
     setPlantsData(prevPlants =>
@@ -70,9 +94,6 @@ const PlantCarousel = ({
       )
     );
 
-    if (onUpdatePlant) {
-      onUpdatePlant(plantId, wateredTime);
-    }
   };
 
   const nextSlide = (): void => {
@@ -114,23 +135,6 @@ const PlantCarousel = ({
     setTouchEnd(0);
   };
 
-  const handleUpdatePlant = (data: PlantFormData) => {
-    setPlantsData((prev) =>
-      prev.map((plant) =>
-        plant.id === data.modalId
-          ? {
-            ...plant,
-            plantName: data.name,
-            wateringInterval: data.wateringInterval,
-            lastWatered: new Date(data.lastWatered).getTime(),
-          }
-          : plant
-      )
-    );
-
-    setIsModalOpen({ option: false, plantId: "" });
-  };
-
 
   return (
     <div className="w-full max-w-md mx-auto">
@@ -144,6 +148,8 @@ const PlantCarousel = ({
         >
           {plantsData.map((plant) => (
             <div key={plant.id} className="w-full flex-shrink-0 px-2">
+            {console.log(plant.id
+            )}
               <PlantCard
                 plantName={plant.plantName}
                 wateringInterval={plant.wateringInterval}
@@ -151,27 +157,33 @@ const PlantCarousel = ({
                 onWater={(wateredTime) => handleWaterPlant(plant.id, wateredTime)}
                 openModal={() => setIsModalOpen({
                   option: true,
-                  plantId: plant.id ?? "",
+                  plantId: plant.id ,
                 })}
+                id={plant.id}
               />
             </div>
           ))}
         </div>,
 
-        {
-          isModalOpen &&
-          <PlantModal
-            isOpen={isModalOpen.option}
-            onClose={() => setIsModalOpen({
-              option: false,
-              plantId: ""
-            })}
-            onSubmit={(data: PlantFormData) => {
-              handleUpdatePlant(data);
-            }}
-            modalId={isModalOpen.plantId}
-          />
-        }
+        {/*{*/}
+        {/*  isModalOpen &&*/}
+        {/*  plantsData.map((plant) => (*/}
+        {/*    <div key={plant.id} className="w-full flex-shrink-0 px-2">*/}
+
+        {/*  <PlantModal*/}
+        {/*    isOpen={isModalOpen.option}*/}
+        {/*    onClose={() => setIsModalOpen({*/}
+        {/*      option: false,*/}
+        {/*      plantId: ""*/}
+        {/*    })}*/}
+        {/*    onSubmit={(data: PlantFormData) => {*/}
+        {/*      handleEditPlant(plant.id, data, true);*/}
+        {/*    }}*/}
+        {/*    modalId={isModalOpen.plantId}*/}
+        {/*  />*/}
+        {/*    </div>*/}
+        {/*  ))*/}
+        {/*}*/}
 
         {/* Navigation Arrows */}
         {plantsData.length > 1 && (
