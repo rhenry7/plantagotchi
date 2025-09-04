@@ -4,12 +4,14 @@ export interface PlantFormData {
   name: string;
   wateringInterval: number;
   lastWatered: string;
+  modalId: string;
 }
 
 export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (data: PlantFormData) => void;
+  modalId: string;
 }
 
 export default function PlantModal({ isOpen, onClose, onSubmit }: ModalProps): JSX.Element | null {
@@ -17,6 +19,7 @@ export default function PlantModal({ isOpen, onClose, onSubmit }: ModalProps): J
     name: "",
     wateringInterval: 0,
     lastWatered: "",
+    modalId: "",
   });
 
   if (!isOpen) return null;

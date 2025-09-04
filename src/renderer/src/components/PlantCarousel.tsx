@@ -1,10 +1,11 @@
-import { useState, JSX } from 'react'
+import {useState, JSX,} from 'react'
 import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react'
 import { PlantCardProps } from '@renderer/components/types'
 import PlantCard from '@renderer/components/PlantCard'
+import PlantModal, { PlantFormData } from '@renderer/components/plantForm'
 
 const samplePlants: PlantCardProps[] = [
   //  lastWatered: Date.now() - days * hours * minutes * millisec
@@ -53,6 +54,12 @@ const PlantCarousel = ({
   const [activeIndex, setActiveIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState<{ option: boolean; plantId: string }>({
+    option: false,
+    plantId: ''
+  })
+
+
 
   const handleWaterPlant = (plantId, wateredTime): void => {
     setPlantsData(prevPlants =>
@@ -107,9 +114,26 @@ const PlantCarousel = ({
     setTouchEnd(0);
   };
 
+  const handleUpdatePlant = (data: PlantFormData) => {
+    setPlantsData((prev) =>
+      prev.map((plant) =>
+        plant.id === data.modalId
+          ? {
+            ...plant,
+            plantName: data.name,
+            wateringInterval: data.wateringInterval,
+            lastWatered: new Date(data.lastWatered).getTime(),
+          }
+          : plant
+      )
+    );
+
+    setIsModalOpen({ option: false, plantId: "" });
+  };
+
+
   return (
     <div className="w-full max-w-md mx-auto">
-
       <div className="relative overflow-hidden">
         <div
           className="flex transition-transform duration-300 ease-out"
@@ -125,10 +149,29 @@ const PlantCarousel = ({
                 wateringInterval={plant.wateringInterval}
                 lastWatered={plant.lastWatered}
                 onWater={(wateredTime) => handleWaterPlant(plant.id, wateredTime)}
+                openModal={() => setIsModalOpen({
+                  option: true,
+                  plantId: plant.id ?? "",
+                })}
               />
             </div>
           ))}
-        </div>
+        </div>,
+
+        {
+          isModalOpen &&
+          <PlantModal
+            isOpen={isModalOpen.option}
+            onClose={() => setIsModalOpen({
+              option: false,
+              plantId: ""
+            })}
+            onSubmit={(data: PlantFormData) => {
+              handleUpdatePlant(data);
+            }}
+            modalId={isModalOpen.plantId}
+          />
+        }
 
         {/* Navigation Arrows */}
         {plantsData.length > 1 && (
@@ -163,7 +206,6 @@ const PlantCarousel = ({
           ))}
         </div>
       )}
-
     </div>
   );
 };

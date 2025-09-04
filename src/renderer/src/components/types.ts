@@ -6,4 +6,5 @@ export type PlantCardProps = {
   lastWatered: number | null;
   wateringInterval: number; // in hours
   onWater: (now: number) => void;
+  openModal?: (option: boolean, modalId: string) => void;
 };

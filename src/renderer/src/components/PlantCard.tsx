@@ -1,10 +1,9 @@
 import { JSX, useEffect, useRef, useState } from 'react'
 import { images } from '@renderer/components/images/images'
 import { Droplets, NotebookPen, Skull, Volume2, VolumeOff } from 'lucide-react'
-import PlantModal, { PlantFormData } from './plantForm'
-import { PlantCardProps } from './types'
+import { PlantCardProps } from '@renderer/components/types'
 
-function plantActions(handleWater: () => void, setIsModalOpen: (isOpen: boolean) => void): JSX.Element {
+function plantActions(handleWater: () => void, setIsModalOpen: (option: boolean) => void | undefined): JSX.Element {
   return (
     <div className="flex items-center gap-14 m-2 p-2">
       <button
@@ -37,13 +36,11 @@ const PlantCard = ({
   plantName = 'My Plant',
   wateringInterval = 7, // days
   lastWatered = null,
-  onWater
+  onWater,
+  openModal,
 }: PlantCardProps): JSX.Element => {
   const [progress, setProgress] = useState(0)
   const [volumeOn, setVolume] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [plantNameState, setPlantNameState] = useState(plantName);
-  const [wateringIntervalState, setWateringIntervalState] = useState(wateringInterval);
   const [lastWateredState, setLastWateredState] = useState(lastWatered || Date.now());
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -69,7 +66,7 @@ const PlantCard = ({
     const updateProgress = (): void => {
       const now = Date.now()
       const timeSinceWatered = now - lastWateredState
-      const totalWateringTime = wateringIntervalState * 24 * 60 * 60 * 1000 // Convert days to ms
+      const totalWateringTime = wateringInterval * 24 * 60 * 60 * 1000 // Convert days to ms
 
       const progressPercentage = Math.min((timeSinceWatered / totalWateringTime) * 100, 100)
       setProgress(progressPercentage)
@@ -81,7 +78,7 @@ const PlantCard = ({
     const interval = setInterval(updateProgress, 60000) // Update every minute
 
     return () => clearInterval(interval)
-  }, [lastWateredState, wateringIntervalState, volumeOn])
+  }, [lastWateredState, wateringInterval, volumeOn])
 
 
   const handleWater = (): void => {
@@ -92,6 +89,8 @@ const PlantCard = ({
       onWater(now)
     }
   }
+
+  const handleOpenModal = (): void | undefined => (openModal ? openModal(true) : undefined)
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const getProgressColor = () => {
@@ -128,7 +127,7 @@ const PlantCard = ({
       </button>
       {getProgressImage()}
       {/* Plant Name */}
-      <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">{plantNameState}</h3>
+      <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">{plantName}</h3>
       {/* Progress Bar and Button Container */}
       <div className="flex items-center gap-3">
         {/* Progress Bar */}
@@ -147,17 +146,7 @@ const PlantCard = ({
           </div>
         </div>
       </div>
-      {plantActions(handleWater, setIsModalOpen)}
-      <PlantModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={(data: PlantFormData) => {
-          setPlantNameState(data.name);
-          setWateringIntervalState(data.wateringInterval);
-          setLastWateredState(new Date(data.lastWatered).getTime());
-          setIsModalOpen(false);
-        }}
-      />
+      {plantActions(handleWater, handleOpenModal)}
       {/* Last Watered Info */}
       <div className="text-xs text-gray-500 mt-0.5 text-center">
         Last watered: {new Date(lastWateredState).toLocaleDateString()}
